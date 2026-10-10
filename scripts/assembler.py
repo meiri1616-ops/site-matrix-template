@@ -5,71 +5,81 @@ def assemble():
     with open("data/site_config.yml", "r", encoding="utf-8") as f:
         config = yaml.safe_load(f)
 
-    with open("templates/index.html", "r", encoding="utf-8") as f:
+    # 1. 识别选择的底盘车型，调取对应模具
+    template_id = config.get("template_id", "chassis_bento")
+    template_path = f"templates/{template_id}.html"
+    
+    if not os.path.exists(template_path):
+        print(f"⚠️ 未找到 {template_path}，使用默认 Bento 模具。")
+        template_path = "templates/chassis_bento.html"
+
+    with open(template_path, "r", encoding="utf-8") as f:
         template = f.read()
 
-    # 1. 组装服务卡片 HTML
+    # 2. 组装业务卡片 (根据模具自适应排版)
     cards_html = []
     for item in config.get("services", []):
-        card = f"""
-        <div class="p-8 rounded-2xl bg-slate-50 border border-slate-200/80 hover:border-blue-500/50 hover:shadow-xl hover:shadow-blue-500/5 transition duration-300">
-            <div class="w-12 h-12 rounded-xl bg-blue-100 text-blue-600 flex items-center justify-center text-xl mb-6">
-                <i class="fa-solid {item['icon']}"></i>
+        if template_id == "chassis_linkr":
+            # Linkr 样式的长条胶囊按钮
+            card = f"""
+            <a href="{item.get('link', '#')}" target="_blank" class="block w-full p-4 rounded-2xl bg-white/10 hover:bg-white/20 border border-white/10 backdrop-blur-md transition duration-200 transform hover:-translate-y-0.5 text-center font-bold text-sm tracking-wide">
+                <i class="fa-solid {item['icon']} mr-2 text-purple-400"></i> {item['title']}
+            </a>
+            """
+        else:
+            # Bento/通用 样式的便当格子卡片
+            card = f"""
+            <div class="p-6 rounded-2xl bg-slate-900 border border-slate-800/80 hover:border-purple-500/40 transition duration-300">
+                <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-lg mb-4">
+                    <i class="fa-solid {item['icon']}"></i>
+                </div>
+                <h4 class="text-base font-bold text-white mb-1.5">{item['title']}</h4>
+                <p class="text-xs text-slate-400 leading-relaxed">{item['desc']}</p>
             </div>
-            <h3 class="text-lg font-bold text-slate-900 mb-2">{item['title']}</h3>
-            <p class="text-sm text-slate-600 leading-relaxed">{item['desc']}</p>
-        </div>
-        """
+            """
         cards_html.append(card)
     services_html = "\n".join(cards_html)
 
-    # 2. 组装选配功能 (在线支付按钮)
+    # 3. 组装选装配件 (收银按钮)
     payment_html = ""
     if config.get("addons", {}).get("payment_button"):
         pay_conf = config.get("payment", {})
         payment_html = f"""
-        <a href="{pay_conf.get('link', '#')}" target="_blank" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-slate-900 text-white font-bold text-base hover:bg-slate-800 transition">
-            {pay_conf.get('button_text', '立即购买')}
+        <a href="{pay_conf.get('link', '#')}" target="_blank" class="px-6 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-sm shadow-lg shadow-purple-600/30 transition">
+            {pay_conf.get('button_text', '立即支持')}
         </a>
         """
 
-    # 3. 组装选配功能 (联系方式徽标)
+    # 4. 组装选装配件 (联系方式)
     contact_badges = []
     c = config.get("contact", {})
-    if c.get("email"):
-        contact_badges.append(f'<span class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200"><i class="fa-solid fa-envelope text-blue-400"></i> {c["email"]}</span>')
     if c.get("telegram"):
-        contact_badges.append(f'<a href="https://t.me/{c["telegram"].replace("@","")}" target="_blank" class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-blue-600/30 border border-blue-500/40 text-blue-300 hover:bg-blue-600/50 transition"><i class="fa-brands fa-telegram text-blue-400"></i> {c["telegram"]}</a>')
-    if c.get("phone"):
-        contact_badges.append(f'<span class="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 border border-slate-700 text-slate-200"><i class="fa-solid fa-phone text-green-400"></i> {c["phone"]}</span>')
+        contact_badges.append(f'<a href="https://t.me/{c["telegram"].replace("@","")}" target="_blank" class="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold inline-flex items-center gap-1.5 transition"><i class="fa-brands fa-telegram text-blue-400"></i> {c["telegram"]}</a>')
+    if c.get("email"):
+        contact_badges.append(f'<span class="px-4 py-2.5 rounded-xl bg-slate-800 text-slate-300 text-xs font-semibold inline-flex items-center gap-1.5"><i class="fa-solid fa-envelope text-purple-400"></i> {c["email"]}</span>')
     contact_html = "\n".join(contact_badges)
 
-    # 4. 组装多语言栏
+    # 5. 组装选装配件 (多语言提示标)
     lang_bar_html = ""
     if config.get("addons", {}).get("i18n"):
-        lang_bar_html = """
-        <div class="text-xs font-medium text-slate-500 bg-slate-100 px-3 py-1.5 rounded-full border border-slate-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-language text-slate-400"></i>
-            <span>多语言就绪 (Multi-Lang)</span>
-        </div>
-        """
+        lang_bar_html = '<span class="text-xs text-slate-400 bg-slate-800 px-3 py-1.5 rounded-full inline-flex items-center gap-1.5 border border-slate-700"><i class="fa-solid fa-globe text-purple-400"></i> 6-Langs Ready</span>'
 
-    # 5. 插槽整体替换
+    # 6. 数据精准塞入插槽
+    brand = config.get("brand_name", "My Brand")
     rendered = template \
-        .replace("{{BRAND_NAME}}", config.get("brand_name", "")) \
+        .replace("{{BRAND_NAME}}", brand) \
+        .replace("{{AVATAR_INITIAL}}", brand[0].upper() if brand else "M") \
         .replace("{{TAGLINE}}", config.get("tagline", "")) \
-        .replace("{{HERO_TITLE}}", config.get("hero_title", "")) \
+        .replace("{{HERO_TITLE}}", config.get("hero_title", brand)) \
         .replace("{{HERO_DESC}}", config.get("hero_desc", "")) \
-        .replace("{{CTA_PRIMARY}}", config.get("cta_primary", "立即咨询")) \
         .replace("{{SERVICES_CARDS_HTML}}", services_html) \
         .replace("{{PAYMENT_BUTTON_HTML}}", payment_html) \
         .replace("{{CONTACT_BADGES_HTML}}", contact_html) \
         .replace("{{LANG_BAR_HTML}}", lang_bar_html)
 
-    # 输出到根目录供 GitHub Pages 直接展示
     with open("index.html", "w", encoding="utf-8") as out:
         out.write(rendered)
-    print("✅ 网页装配完成！零幻觉生成完毕。")
+    print(f"✅ 成功调取模具 [{template_id}]，流水线装配完成！")
 
 if __name__ == "__main__":
     assemble()
