@@ -1,0 +1,38 @@
+name: Assemble and Deploy Site
+
+on:
+  push:
+    paths:
+      - 'data/site_config.yml'   # 只要数据改动，自动装配
+      - 'templates/**'
+  workflow_dispatch:            # 支持手动一键运行
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Dependencies
+        run: pip install pyyaml
+
+      - name: Run Assembler Engine
+        run: python scripts/assembler.py
+
+      - name: Commit Generated Index HTML
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add index.html
+          git diff --quiet && git diff --staged --quiet || (git commit -m "chore: assemble site from config [skip ci]" && git push)
