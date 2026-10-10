@@ -1,0 +1,42 @@
+{
+  "chassis_models": [
+    {
+      "id": "chassis_linkr",
+      "name": "Linkr 灵动名片款",
+      "category": "个人 IP / 网红博主 / 极简短链",
+      "preview_image": "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=800&q=80",
+      "features": ["居中高光头像", "多平台社交胶囊按钮", "沉浸式渐变背景"],
+      "compatible_addons": ["i18n", "telegram_direct", "payment_button"]
+    },
+    {
+      "id": "chassis_bento",
+      "name": "Bento 苹果便当盒款",
+      "category": "独立开发者 / UI设计师 / 极客",
+      "preview_image": "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=800&q=80",
+      "features": ["圆角毛玻璃卡片", "非对称流体网格", "深浅色对比强烈"],
+      "compatible_addons": ["i18n", "telegram_direct", "payment_button", "seo_meta"]
+    },
+    {
+      "id": "chassis_agency",
+      "name": "Enterprise 商务企业款",
+      "category": "出海软件 / B2B外贸 / 咨询工作室",
+      "preview_image": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80",
+      "features": ["高转化率 Hero 头部", "三列核心业务矩阵", "信任徽标展位"],
+      "compatible_addons": ["i18n", "telegram_direct", "payment_button", "seo_meta"]
+    },
+    {
+      "id": "chassis_artisan",
+      "name": "Artisan 本地匠人款",
+      "category": "花店 / 咖啡馆 / 上门维修 / 线下沙龙",
+      "preview_image": "https://images.unsplash.com/photo-1513519245088-0e12902e5a38?w=800&q=80",
+      "features": ["暖色亲和力氛围", "极速电话直拨大按钮", "营业时间与地址卡片"],
+      "compatible_addons": ["telegram_direct", "payment_button"]
+    }
+  ],
+  "optional_packages": {
+    "i18n": { "name": "出海 6 国多语言自适应套件", "icon": "fa-globe" },
+    "telegram_direct": { "name": "客户咨询一键直达 Telegram", "icon": "fa-paper-plane" },
+    "payment_button": { "name": "Stripe / PayPal 快捷收银台", "icon": "fa-credit-card" },
+    "seo_meta": { "name": "Google 结构化与社交分享大图卡片", "icon": "fa-magnifying-glass" }
+  }
+}
