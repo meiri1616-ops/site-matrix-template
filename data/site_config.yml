@@ -1,0 +1,35 @@
+# ================= 品牌基础信息 =================
+brand_name: "极客出海工坊"
+tagline: "数字化出海与全球交付解决方案"
+hero_title: "为全球开发者打造的 极速出海基础设施"
+hero_desc: "告别冗长的传统外包，3分钟极速装配上线。高可用响应式骨架、全自动化多语言自适应，助力您的业务扬帆出海。"
+cta_primary: "立即开始咨询"
+
+# ================= 特斯拉式选配件开关 (Add-ons) =================
+addons:
+  i18n: true              # 是否开启多语言切换
+  payment_button: true    # 是否开启在线收银按钮
+  telegram_direct: true   # 是否开启 Telegram 直接联系
+
+# ================= 在线收款配置 (如果开启) =================
+payment:
+  button_text: "⚡ 购买标准版套餐 ($99)"
+  link: "https://stripe.com" # 填入你的 Stripe / Lemon Squeezy 购买链接
+
+# ================= 核心业务卡片 (固定 3 块经典排版) =================
+services:
+  - title: "现代响应式交付"
+    desc: "100% 经过实机测试的排版骨架，iPhone、安卓与电脑端毫无瑕疵，测速满分。"
+    icon: "fa-mobile-screen-button"
+  - title: "出海多语言套件"
+    desc: "原生支持英、日、德、西等 6 门语言，Gemini 智能自适应翻译，消除文化隔阂。"
+    icon: "fa-globe"
+  - title: "零月租终身托管"
+    desc: "基于全球顶级 CDN 边缘加速部署，终身无需支付昂贵服务器月租，成本无限趋近于零。"
+    icon: "fa-shield-halved"
+
+# ================= 官方联系通道 =================
+contact:
+  phone: "+1 (555) 019-2834"
+  email: "support@example.com"
+  telegram: "@awesomevpnchina"
