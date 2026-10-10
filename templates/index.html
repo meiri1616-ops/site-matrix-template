@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="zh-CN" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{BRAND_NAME}} - {{TAGLINE}}</title>
+    <!-- 使用全球高速 Tailwind CDN，零编译、零依赖、秒级打开 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#2563eb',
+                        darkBg: '#0f172a'
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-blue-500 selection:text-white">
+
+    <!-- 顶部导航栏 -->
+    <header class="sticky top-0 z-50 backdrop-blur-md bg-white/80 border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <span class="w-8 h-8 rounded-lg bg-blue-600 flex items-center justify-center text-white font-bold text-lg shadow-md shadow-blue-500/20">
+                    <i class="fa-solid fa-cube text-sm"></i>
+                </span>
+                <span class="font-extrabold text-xl tracking-tight text-slate-900">{{BRAND_NAME}}</span>
+            </div>
+            
+            <div class="flex items-center gap-4">
+                {{LANG_BAR_HTML}}
+                <a href="#contact" class="hidden sm:inline-flex items-center justify-center px-4 py-2 text-sm font-semibold rounded-full bg-slate-900 text-white hover:bg-slate-800 transition shadow-sm">
+                    立即联系
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 视觉英雄区 (Hero Section) -->
+    <section class="relative pt-20 pb-16 md:pt-28 md:pb-24 overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4 text-center">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-blue-50 border border-blue-200/60 text-blue-700 text-xs font-semibold mb-6">
+                <span class="w-2 h-2 rounded-full bg-blue-600 animate-pulse"></span>
+                {{TAGLINE}}
+            </div>
+            <h1 class="text-4xl sm:text-5xl md:text-6xl font-black tracking-tight text-slate-900 mb-6 leading-[1.15]">
+                {{HERO_TITLE}}
+            </h1>
+            <p class="text-lg sm:text-xl text-slate-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                {{HERO_DESC}}
+            </p>
+            
+            <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
+                <a href="#contact" class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-blue-600 text-white font-bold text-base hover:bg-blue-700 shadow-lg shadow-blue-600/25 transition">
+                    {{CTA_PRIMARY}}
+                </a>
+                {{PAYMENT_BUTTON_HTML}}
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心业务矩阵 (Service Cards) -->
+    <section class="py-16 bg-white border-y border-slate-200/60">
+        <div class="max-w-6xl mx-auto px-4">
+            <div class="text-center max-w-2xl mx-auto mb-12">
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 mb-3">我们的核心服务</h2>
+                <p class="text-slate-500">标准化交付，专业可靠保障，满足您的严苛需求。</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {{SERVICES_CARDS_HTML}}
+            </div>
+        </div>
+    </section>
+
+    <!-- 联系与交付通道 (Contact Section) -->
+    <section id="contact" class="py-16 max-w-4xl mx-auto px-4">
+        <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 sm:p-12 text-white shadow-2xl text-center">
+            <h3 class="text-2xl sm:text-3xl font-black mb-4">准备好开启合作了吗？</h3>
+            <p class="text-slate-300 max-w-xl mx-auto mb-8 text-sm sm:text-base leading-relaxed">
+                无需冗长流程，随时与我们取得联系，获取定制报价或即时响应。
+            </p>
+            
+            <div class="flex flex-wrap items-center justify-center gap-4 text-sm font-semibold">
+                {{CONTACT_BADGES_HTML}}
+            </div>
+        </div>
+    </section>
+
+    <!-- 底部版权 -->
+    <footer class="py-8 text-center text-xs text-slate-400 border-t border-slate-200">
+        <p>© 2026-2027 {{BRAND_NAME}}. All rights reserved. Powered by GitMatrix Engine.</p>
+    </footer>
+
+</body>
+</html>
