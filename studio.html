@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>GitMatrix Studio - 专属网站选配中心</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .selected-card { border-color: #8b5cf6 !important; background: rgba(139, 92, 246, 0.15) !important; }
+    </style>
+</head>
+<body class="bg-[#121212] text-white min-h-screen flex flex-col justify-between p-4 antialiased selection:bg-purple-500">
+
+    <!-- 顶部进度与标题 -->
+    <div class="max-w-md mx-auto w-full pt-4">
+        <div class="flex items-center justify-between text-xs text-neutral-400 mb-6">
+            <span class="font-bold tracking-wider text-purple-400" id="step-indicator">STEP 1 OF 3</span>
+            <span class="hover:text-white cursor-pointer" onclick="resetForm()">重置</span>
+        </div>
+
+        <!-- 步骤 1：定位选择 (Goal) -->
+        <div id="step-1" class="transition-all duration-300">
+            <h1 class="text-2xl font-black mb-2 tracking-tight">您搭建网站的核心目标是？</h1>
+            <p class="text-xs text-neutral-400 mb-6 leading-relaxed">这将帮助流水线为您自动匹配最契合的组件与转化架构。</p>
+
+            <div class="space-y-3">
+                <div onclick="selectGoal(this, 'creator')" class="goal-card p-4 rounded-2xl bg-neutral-900 border border-neutral-800 cursor-pointer flex items-center justify-between transition active:scale-[0.98]">
+                    <div>
+                        <h3 class="font-bold text-sm text-white mb-0.5">个人创作者 / 网红博主</h3>
+                        <p class="text-xs text-neutral-400">聚合社交媒体多链接，沉淀个人数字资产与粉丝</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-purple-500/20 text-purple-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i>
+                    </div>
+                </div>
+
+                <div onclick="selectGoal(this, 'business')" class="goal-card p-4 rounded-2xl bg-neutral-900 border border-neutral-800 cursor-pointer flex items-center justify-between transition active:scale-[0.98]">
+                    <div>
+                        <h3 class="font-bold text-sm text-white mb-0.5">商业品牌 / 出海工作室</h3>
+                        <p class="text-xs text-neutral-400">展示公司服务能力，承接跨国询盘与商业合作</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-blue-500/20 text-blue-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-briefcase"></i>
+                    </div>
+                </div>
+
+                <div onclick="selectGoal(this, 'local')" class="goal-card p-4 rounded-2xl bg-neutral-900 border border-neutral-800 cursor-pointer flex items-center justify-between transition active:scale-[0.98]">
+                    <div>
+                        <h3 class="font-bold text-sm text-white mb-0.5">本地生活 / 实体服务</h3>
+                        <p class="text-xs text-neutral-400">鲜花定制、咖啡餐饮、家政维修等线下业务获客</p>
+                    </div>
+                    <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center text-lg">
+                        <i class="fa-solid fa-store"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 步骤 2：挑选底盘外观 (Theme) -->
+        <div id="step-2" class="hidden transition-all duration-300">
+            <h1 class="text-2xl font-black mb-2 tracking-tight">挑选您心仪的模具风格</h1>
+            <p class="text-xs text-neutral-400 mb-6 leading-relaxed">选定成熟高转化骨架，文字与细节后续可随时更新。</p>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div onclick="selectTheme(this, 'chassis_linkr')" class="theme-card p-3 rounded-2xl bg-neutral-900 border border-neutral-800 cursor-pointer transition active:scale-[0.98]">
+                    <div class="h-28 rounded-xl bg-gradient-to-tr from-purple-900 via-indigo-950 to-slate-900 mb-2.5 flex items-center justify-center relative overflow-hidden">
+                        <div class="w-8 h-8 rounded-full bg-purple-500/40 mb-4"></div>
+                        <div class="absolute bottom-3 w-16 h-2 bg-white/20 rounded-full"></div>
+                    </div>
+                    <h4 class="font-bold text-xs">Linkr 极简胶囊</h4>
+                    <span class="text-[10px] text-neutral-400">超高点击率多链接</span>
+                </div>
+
+                <div onclick="selectTheme(this, 'chassis_bento')" class="theme-card p-3 rounded-2xl bg-neutral-900 border border-neutral-800 cursor-pointer transition active:scale-[0.98]">
+                    <div class="h-28 rounded-xl bg-neutral-950 border border-neutral-800 p-2 mb-2.5 grid grid-cols-2 gap-1.5 overflow-hidden">
+                        <div class="col-span-2 bg-neutral-800 rounded-lg h-10"></div>
+                        <div class="bg-purple-900/40 rounded-lg h-10"></div>
+                        <div class="bg-neutral-800 rounded-lg h-10"></div>
+                    </div>
+                    <h4 class="font-bold text-xs">Bento 苹果便当盒</h4>
+                    <span class="text-[10px] text-neutral-400">前沿极客模块化美学</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- 步骤 3：选装包与资料填报 (Addons & Info) -->
+        <div id="step-3" class="hidden transition-all duration-300">
+            <h1 class="text-2xl font-black mb-2 tracking-tight">配置功能选装包与资料</h1>
+            <p class="text-xs text-neutral-400 mb-4">勾选您所需的零件，随手输入核心事实。</p>
+
+            <!-- 选装包勾选 -->
+            <div class="space-y-2 mb-5">
+                <label class="flex items-center justify-between p-3 rounded-xl bg-neutral-900 border border-neutral-800 cursor-pointer">
+                    <span class="text-xs font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-globe text-purple-400"></i> 出海 6 国多语言自动系统
+                    </span>
+                    <input type="checkbox" id="addon-i18n" checked class="w-4 h-4 accent-purple-600 rounded">
+                </label>
+
+                <label class="flex items-center justify-between p-3 rounded-xl bg-neutral-900 border border-neutral-800 cursor-pointer">
+                    <span class="text-xs font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane text-blue-400"></i> 咨询直达 Telegram 频道
+                    </span>
+                    <input type="checkbox" id="addon-tg" checked class="w-4 h-4 accent-purple-600 rounded">
+                </label>
+
+                <label class="flex items-center justify-between p-3 rounded-xl bg-neutral-900 border border-neutral-800 cursor-pointer">
+                    <span class="text-xs font-semibold flex items-center gap-2">
+                        <i class="fa-solid fa-credit-card text-emerald-400"></i> 在线快捷收银台 (Stripe/PayPal)
+                    </span>
+                    <input type="checkbox" id="addon-pay" class="w-4 h-4 accent-purple-600 rounded">
+                </label>
+            </div>
+
+            <!-- 核心资料简单填 -->
+            <div class="space-y-3">
+                <input type="text" id="brand-name" placeholder="品牌/主理人名字 (如: 极客出海工坊)" class="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-xs focus:border-purple-500 focus:outline-none">
+                <textarea id="brand-desc" rows="2" placeholder="主营业务粗略介绍 (随手打字即可，AI会自动提纯)" class="w-full p-3 rounded-xl bg-neutral-900 border border-neutral-800 text-xs focus:border-purple-500 focus:outline-none"></textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部固定操作按钮 -->
+    <div class="max-w-md mx-auto w-full pt-6 pb-2">
+        <button id="next-btn" onclick="handleNext()" class="w-full py-4 rounded-full bg-purple-600 hover:bg-purple-500 text-white font-extrabold text-sm tracking-wide shadow-lg shadow-purple-600/30 transition active:scale-[0.98]">
+            继续 (Continue)
+        </button>
+    </div>
+
+    <!-- 交互脚本 -->
+    <script>
+        let currentStep = 1;
+        let selectedGoal = 'creator';
+        let selectedTheme = 'chassis_bento';
+
+        function selectGoal(el, goal) {
+            document.querySelectorAll('.goal-card').forEach(c => c.classList.remove('selected-card'));
+            el.classList.add('selected-card');
+            selectedGoal = goal;
+        }
+
+        function selectTheme(el, theme) {
+            document.querySelectorAll('.theme-card').forEach(c => c.classList.remove('selected-card'));
+            el.classList.add('selected-card');
+            selectedTheme = theme;
+        }
+
+        function handleNext() {
+            if (currentStep === 1) {
+                document.getElementById('step-1').classList.add('hidden');
+                document.getElementById('step-2').classList.remove('hidden');
+                document.getElementById('step-indicator').innerText = 'STEP 2 OF 3';
+                currentStep = 2;
+            } else if (currentStep === 2) {
+                document.getElementById('step-2').classList.add('hidden');
+                document.getElementById('step-3').classList.remove('hidden');
+                document.getElementById('step-indicator').innerText = 'STEP 3 OF 3';
+                document.getElementById('next-btn').innerText = '⚡ 锁单并生成专属应用 (Launch)';
+                document.getElementById('next-btn').classList.replace('bg-purple-600', 'bg-gradient-to-r');
+                document.getElementById('next-btn').classList.add('from-purple-600', 'to-indigo-600');
+                currentStep = 3;
+            } else if (currentStep === 3) {
+                // 提交选配成果
+                const name = document.getElementById('brand-name').value || 'My Brand';
+                alert(`🎉 选配成功！\n- 车型：${selectedTheme}\n- 品牌：${name}\n\n正在为您调取云端装配流水线...`);
+                // 自动跳往装配好的成品页面预览
+                window.location.href = `./index.html`;
+            }
+        }
+
+        function resetForm() {
+            location.reload();
+        }
+
+        // 默认选中第一个
+        document.querySelector('.goal-card').click();
+        setTimeout(() => document.querySelector('.theme-card').click(), 50);
+    </script>
+</body>
+</html>
